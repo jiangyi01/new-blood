@@ -1,0 +1,41 @@
+#bg {
+  width: 100%;
+}
+.intr-campus {
+  margin-top: 30px;
+  width: 100%;
+}
+.intr-campus-letter {
+  font-size: large;
+  margin-left: 20px;
+}
+.intr-campus-group {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  height: 100px;
+}
+
+.intr-campus-group-con {
+  margin: 0 auto;
+  width: 150px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+border:1px solid lightgray;
+border-radius: 10px;
+box-shadow: 1px 1px 15px lightgray;
+
+}
+
+#intr-campus-group-software {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  height: 80px;
+}
+#intr-campus-takePosition {
+  height: 100px;
+}
