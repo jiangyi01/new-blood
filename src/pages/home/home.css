@@ -1,0 +1,37 @@
+#footer {
+  height: 60px;
+  width: 100%;
+  background-color: #ddd;
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #a73730;
+}
+.bodyHome {
+}
+#footerButtonIntr {
+  width: 50%;
+  width: 50%;
+  border: white solid 0px;
+  border-right: rgb(223, 223, 223, 0.2) solid 0.5px;
+  border-radius: 0 0 0 0;
+  height: 80%;
+  background-color: #a73730;
+  color: white;
+  font-size: small;
+}
+#footerButtonInfo {
+  width: 50%;
+  border: white solid 0px;
+  border-left: rgb(223, 223, 223, 0.2) solid 0.5px;
+  border-radius: 0 0 0 0;
+  height: 80%;
+  background-color: #a73730;
+  color: white;
+  font-size: small;
+}
+.changeHomeWindow-img {
+  width: 30px;
+}
