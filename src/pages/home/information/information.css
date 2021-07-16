@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @media screen and (max-height: 737px) and (min-height: 569px) {
   #informationBackground {
     position: absolute;
@@ -350,4 +351,358 @@
 #informationHeadImg{
   width:100px;
   height: 100px;
+=======
+@media screen and (max-height: 737px) and (min-height: 569px) {
+  #informationBackground {
+    position: absolute;
+    height: 150px;
+    width: 100%;
+    background: -webkit-gradient
+      (linear, left right, 100% 0, from (#f08cee), to (#f46084));
+    background: -moz-linear-gradient (left, #f08cee, #f46084);
+    background: -o-linear-gradient (left, #f08cee, #f46084);
+    background: linear-gradient(to right, #f08cee, #f46084);
+    border-radius: 0 0 80% 80%;
+    display: table-cell;
+    vertical-align: middle;
+  }
+  #informationPanel {
+    margin: 0 auto;
+    display: table;
+    height: 150px;
+    background-color: white;
+    width: 300px;
+    margin-top: 50px;
+    border-radius: 6px;
+    box-shadow: 1px 1px 10px #888888;
+  }
+  #informationCon {
+    margin: 0 auto;
+    display: table;
+    margin-top: 20px;
+    width: 250px;
+    height: 50px;
+  }
+  #choiceTags {
+    width: 100%;
+    height: 200px;
+  }
+  .chosenTagBar {
+
+ 
+
+    float: right;
+  }
+  .chosenTagBar {
+    margin-top: 20px;
+   width: 350px;   height: 80px;
+ 
+    background: -webkit-gradient
+      (linear, left right, 100% 0, from (#e8b5e4), to (#d6acdf));
+    background: -moz-linear-gradient (left, #e8b5e4, #d6acdf);
+    background: -o-linear-gradient (left, #e8b5e4, #d6acdf);
+    background: linear-gradient(to right, #e8b5e4, #d6acdf);
+    float: right;
+    border-radius: 10px 0 0 10px;
+  }
+  .chosenTagBar-num {
+    width: 50px;
+  }
+  .chosenTagBar-con {
+    width: 300px;
+  }
+  #informationButtonRegister {
+    border: none;
+    border-radius: 6px;
+    background-color: #baa0da;
+    width: 300px;
+    height: 40px;
+  }
+  #informationButtonExit {
+    width: 300px;
+    height: 40px;
+    border-radius: 6px;
+  }
+  .informationButton {
+    margin-top: 16px;
+  }
+}
+@media screen and (max-height: 568px) {
+  #informationBackground {
+    position: absolute;
+    height: 200px;
+
+    width: 100%;
+    background: -webkit-gradient
+      (linear, left right, 100% 0, from (#f08cee), to (#f46084));
+    background: -moz-linear-gradient (left, #f08cee, #f46084);
+    background: -o-linear-gradient (left, #f08cee, #f46084);
+    background: linear-gradient(to right, #f08cee, #f46084);
+    border-radius: 0 0 80% 80%;
+    display: table-cell;
+    vertical-align: middle;
+  }
+  #informationPanel {
+    margin: 0 auto;
+    display: table;
+    height: 150px;
+    background-color: white;
+    width: 300px;
+    margin-top: 50px;
+    border-radius: 6px;
+    box-shadow: 1px 1px 10px #888888;
+  }
+  #informationCon {
+    margin: 0 auto;
+    display: table;
+    margin-top: 2px;
+    width: 250px;
+    height: 50px;
+  }
+  #choiceTags {
+    width: 100%;
+    height: 60px;
+  }
+
+  #choiceTags {
+    width: 100%;
+    height: 60px;
+  }
+  .chosenTagBar {
+    margin-top: 0px;
+    width: 300px;
+    height: 70px;
+    background: -webkit-gradient
+      (linear, left right, 100% 0, from (#e8b5e4), to (#d6acdf));
+    background: -moz-linear-gradient (left, #e8b5e4, #d6acdf);
+    background: -o-linear-gradient (left, #e8b5e4, #d6acdf);
+    background: linear-gradient(to right, #e8b5e4, #d6acdf);
+    float: right;
+    border-radius: 10px 0 0 10px;
+  }
+  .chosenTagBar-num {
+    width: 50px;
+  }
+  .chosenTagBar-con {
+    width: 250px;
+  }
+  
+  #informationButtonRegister {
+    border: none;
+    border-radius: 6px;
+    background-color: #baa0da;
+    width: 300px;
+    height: 30px;
+  }
+  #informationButtonExit {
+    width: 300px;
+    height: 30px;
+    border-radius: 6px;
+  }
+  .informationButton {
+    margin-top: 10px;
+  }
+}
+@media screen and (min-height: 737px) {
+  #informationBackground {
+    position: absolute;
+    height: 170px;
+
+    width: 100%;
+    background: -webkit-gradient
+      (linear, left right, 100% 0, from (#f08cee), to (#f46084));
+    background: -moz-linear-gradient (left, #f08cee, #f46084);
+    background: -o-linear-gradient (left, #f08cee, #f46084);
+    background: linear-gradient(to right, #f08cee, #f46084);
+    border-radius: 0 0 80% 80%;
+    display: table-cell;
+    vertical-align: middle;
+  }
+  #informationPanel {
+    margin: 0 auto;
+    display: table;
+    height: 150px;
+    background-color: white;
+    width: 300px;
+    margin-top: 50px;
+    border-radius: 6px;
+    box-shadow: 1px 1px 10px #888888;
+  }
+  #informationCon {
+    margin: 0 auto;
+    display: table;
+    margin-top: 20px;
+    width: 250px;
+    height: 50px;
+  }
+
+  #choiceTags {
+    width: 100%;
+    height: 280px;
+  }
+  .chosenTagBar {
+    margin-top: 40px;
+    width: 330px;
+    height: 80px;
+    background: -webkit-gradient
+      (linear, left right, 100% 0, from (#e8b5e4), to (#d6acdf));
+    background: -moz-linear-gradient (left, #e8b5e4, #d6acdf);
+    background: -o-linear-gradient (left, #e8b5e4, #d6acdf);
+    background: linear-gradient(to right, #e8b5e4, #d6acdf);
+    float: right;
+    border-radius: 10px 0 0 10px;
+  }
+  .chosenTagBar-num {
+    width: 50px;
+  }
+  .chosenTagBar-con {
+    width: 280px;
+  }
+  .chosenTagBar-con div {
+    margin-top: 3px;
+  }
+
+
+
+  #informationButtonRegister {
+    border: none;
+    border-radius: 6px;
+    background-color: #baa0da;
+    width: 300px;
+    height: 40px;
+  }
+  #informationButtonExit {
+    width: 300px;
+    height: 40px;
+    border-radius: 6px;
+  }
+  .informationButton {
+    margin-top: 20px;
+  }
+}
+.chosenTagBar-con div {
+  float: none;
+}
+.chosenTagBar-num {
+  float: left;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px 0 0 20px;
+  background: -webkit-gradient
+    (linear, top bottom, 100% 0, from (#c3a0da), to (#daaee1));
+  background: -moz-linear-gradient (top, #c3a0da, #daaee1);
+  background: -o-linear-gradient (top, #c3a0da, #daaee1);
+  background: linear-gradient(to top, #c3a0da, #daaee1);
+  box-shadow: 1px 0px 10px #888888;
+}
+.chosenTagBar-con {
+  height: 100%;
+  background: -webkit-gradient
+    (linear, left right, 100% 0, from (#e8b5e4), to (#d6acdf));
+  background: -moz-linear-gradient (left, #e8b5e4, #d6acdf);
+  background: -o-linear-gradient (left, #e8b5e4, #d6acdf);
+  background: linear-gradient(to right, #e8b5e4, #d6acdf);
+  float: left;
+  border-radius: 5px 0 0 5px;
+  box-shadow: 1px 0px 10px #888888;
+}
+.chosenTagBar-con-depart {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: medium;
+  padding-top: 5px;
+}
+.chosenTagBar-con-group {
+  width: 20px;
+}
+.chosenTagBar-con-positionNum {
+  width: 80%;
+  padding-top: 5px;
+  padding-left: 20px;
+  font-size: medium;
+}
+.chosenTagBar-con-positionNum div {
+  float: left;
+  
+}
+.paihao {
+  font-size: medium;
+  padding-top: 3px;
+}
+.shuzi {
+  font-weight: 500;
+  color: yellow;
+  font-size: larger;
+}
+
+#informationChooseButton {
+  margin: 0 auto;
+  display: table;
+}
+
+.informationTag {
+  background-color: #fcedfb;
+  width: 50px;
+  margin: 10px;
+  text-align: center;
+  padding: 3px;
+}
+#informationTagBar {
+  margin: 0 auto;
+  display: table;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  overflow: auto;
+}
+.informationPanelTag {
+  width: 100%;
+}
+#informationTagIcon {
+  margin: 0 auto;
+  display: table;
+  border-radius: 50%;
+  border: 4px solid gray;
+  padding: 10px;
+  margin-top: 15px;
+}
+#informationButtonSign {
+  border: none;
+  border-radius: 6px;
+  background-color: #baa0da;
+  width: 300px;
+  height: 40px;
+  font-weight: 600;
+}
+.informationButtonUpletter {
+  text-align: center;
+  color: red;
+}
+
+.informationHeadTag{
+  background-color: #fcedfb;
+
+  text-align: center;
+  margin: 0 auto;
+  display: table;
+    margin-top: 15px;
+  padding: 4px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 10px;
+}
+#informationPanelHeadTag{
+  width: 200px;
+  float: right;
+}
+#informationHeadImg{
+  width:100px;
+  height: 100px;
+>>>>>>> 82b70a80e8268a6b4109ead15b0113108f60d1fa
 }

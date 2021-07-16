@@ -2,6 +2,7 @@
   "name": "new-blood",
   "version": "0.1.0",
   "private": true,
+<<<<<<< HEAD
 
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
@@ -12,6 +13,21 @@
     "react-dom": "^17.0.2",
     "react-router": "^5.2.0",
     "react-scripts": "4.0.3",
+=======
+  "dependencies": {
+    "@ant-design/icons": "^4.6.2",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "antd": "^4.16.7",
+    "axios": "^0.21.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.4",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "redux-thunk": "^2.3.0",
+>>>>>>> 82b70a80e8268a6b4109ead15b0113108f60d1fa
     "web-vitals": "^1.0.1"
   },
   "scripts": {
@@ -37,8 +53,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+<<<<<<< HEAD
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.14.5"
+=======
+>>>>>>> 82b70a80e8268a6b4109ead15b0113108f60d1fa
   }
 }
