@@ -20,6 +20,9 @@ class Home_page extends Component {
   componentDidMount() {
     console.log(this.props);
   }
+
+  
+
   changeHomeWindow_Info = (type) => {
     this.setState({
       chosen: 1,

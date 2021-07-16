@@ -29,7 +29,7 @@ const chosenTag = (num, depart, group, positionNum) => {
 };
 
 const chosenTagNum = (data) => {
-  console.log(data);
+  //console.log(data);
   if (data.depart1 !== "" && data.depart2 !== "") {
     return (
       <div>
@@ -57,12 +57,10 @@ class Information_page extends Component {
     //this.TimerRequest();
   }
   TimerRequest = () => {
-    this.props.TimerRequest();
-    console.log(this.props);
     if (this.props.login.isLogin === 2) {
-      setTimeout(() => {
-        //console.log("请求一遍");
-        this.TimerRequest();
+      setInterval(() => {
+        console.log("请求一遍");
+        this.props.TimerRequest();
       }, 10000);
     }
   };

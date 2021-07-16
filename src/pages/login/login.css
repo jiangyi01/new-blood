@@ -35,11 +35,16 @@
   margin: 0 auto;
   display: table;
   width: 90%;
-  margin-top: 15%;
+  margin-top: 25px;
 }
+
 .inputBar{
 margin-bottom: 10%;
-
+height: 55px;
+}
+ .ant-input-lg {
+  height: 40px  !important;
+  margin-left: 5px !important;
 }
 #loginButton{
     margin: 0 auto;
