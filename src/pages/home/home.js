@@ -5,7 +5,7 @@ import { Redirect, Link } from "react-router-dom";
 import userStatus from "../../constants/login";
 import "./home.css";
 import Introduce from "./introduce/introduce";
-
+import { information_test } from "../../redux/request";
 import { Button } from "antd";
 import Information from "./information/information";
 import introduce from '../../constants/img/introduce.png'
@@ -20,6 +20,12 @@ class Home_page extends Component {
 
   componentDidMount() {
     console.log(this.props);
+    if (this.props.login.isLogin === 2) {
+      setInterval(() => {
+        console.log("请求一遍");
+        this.props.TimerRequest();
+      }, 10000);
+    }
   }
 
   
@@ -67,6 +73,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     test: () => {
       console.log(ownProps);
+    },
+    TimerRequest: () => {
+      dispatch(information_test("1", "2"));
     },
   };
 };

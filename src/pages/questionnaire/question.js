@@ -1,15 +1,18 @@
 import { connect } from "react-redux";
 import React, { Component } from "react";
 import "./question.css";
-import { Checkbox, Row, Col, Radio, Space, Button,Input } from "antd";
+import Axios from "axios";
+import {SUBMIT_QUESTIONNAIRE_URL,GET_QUESTIONNAIRE_URL} from '../../constants/requestURL.js'
+import qs from 'qs'
+import { Checkbox, Row, Col, Radio, Space, Button, Input ,message} from "antd";
 const { TextArea } = Input;
 class Question_page extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      1: "1",
-      2: "2",
-      3: "这是第三题",
+      1: "",
+      2: "",
+      3: "",
       4: "",
       5: "",
       6: "",
@@ -28,6 +31,8 @@ class Question_page extends Component {
       19: "",
       20: "",
       21: "",
+      num: 21,
+      onSubmit: false,
     };
   }
   plainOptions = ["Apple", "Pear", "Orange"];
@@ -112,61 +117,100 @@ class Question_page extends Component {
   };
 
   //单选题对应的组件
-  sigleChoose = (num, con, ques) => {
-    let rows = [];
-    this.toGiveOptionsMata(con).forEach((item, index, arr) => {
-      //此处插入的标签中，必去有一个参数key去标识
-      rows.push(
-        <Radio value={item.value} key={index}>
-          {item.label}
-        </Radio>
-      );
-    });
-    return (
-      <div className="question-all-body-each">
-        <div className="questionTag">
-          <div className="questionNum">{num > 9 ? num : "0" + num}</div>
-          <div className="questionBody">
-            <div className="questionCon">{ques}</div>
-            <div className="questionReq">
-              <Radio.Group
-                onChange={(e) => {
-                  this.onChange_single(e, num);
-                }}
-                value={this.state[num]}
-              >
-                <Space direction="vertical">{rows}</Space>
-              </Radio.Group>
+  onTypeChoose = (num, con, ques, type) => {
+    switch (type) {
+      case "multiple": {
+        let rows = [];
+        this.toGiveOptionsMata(con).forEach((item, index, arr) => {
+          //此处插入的标签中，必去有一个参数key去标识
+          rows.push(
+            <Row key={index}>
+              <Col span={24}>
+                <Checkbox value={item.value}>{item.label}</Checkbox>
+              </Col>
+            </Row>
+          );
+        });
+
+        return (
+          <div className="question-all-body-each">
+            <div className="questionTag">
+              <div className="questionNum">{num > 9 ? num : "0" + num}</div>
+              <div className="questionBody">
+                <div className="questionCon">{ques}</div>
+                <div className="questionReq">
+                  <Checkbox.Group
+                    defaultValue={[]}
+                    onChange={(checkedValues) => {
+                      this.onChange_multiChoose(checkedValues, num);
+                    }}
+                  >
+                    {rows}
+                  </Checkbox.Group>
+                </div>
+              </div>
             </div>{" "}
-          </div>{" "}
-        </div>{" "}
-      </div>
-    );
+          </div>
+        );
+      }
+      case "subjective": {
+        return (
+          <div className="question-all-body-each">
+            <div className="questionTag">
+              <div className="questionNum">{num > 9 ? num : "0" + num}</div>
+              <div className="questionBody">
+                <div className="questionCon">{ques}</div>
+                <div className="questionReq">
+                  <TextArea
+                    showCount
+                    maxLength={255}
+                    className="question-wordsInput-TextArea-con"
+                    onChange={(e) => {
+                      this.onChange_words(e, num);
+                    }}
+                    size="large"
+                  />
+                </div>
+              </div>
+            </div>{" "}
+          </div>
+        );
+      }
+      default: {
+        let rows = [];
+        this.toGiveOptionsMata(con).forEach((item, index, arr) => {
+          //此处插入的标签中，必去有一个参数key去标识
+          rows.push(
+            <Radio value={item.value} key={index}>
+              {item.label}
+            </Radio>
+          );
+        });
+        return (
+          <div className="question-all-body-each">
+            <div className="questionTag">
+              <div className="questionNum">{num > 9 ? num : "0" + num}</div>
+              <div className="questionBody">
+                <div className="questionCon">{ques}</div>
+                <div className="questionReq">
+                  <Radio.Group
+                    onChange={(e) => {
+                      this.onChange_single(e, num);
+                    }}
+                    value={this.state[num]}
+                  >
+                    <Space direction="vertical">{rows}</Space>
+                  </Radio.Group>
+                </div>{" "}
+              </div>{" "}
+            </div>{" "}
+          </div>
+        );
+      }
+    }
   };
 
   //问答题对应的组件
-  wordsInput=(num, con, ques)=>{
-    return (
-       <div className="question-all-body-each">
-        <div className="questionTag">
-          <div className="questionNum">{num > 9 ? num : "0" + num}</div>
-          <div className="questionBody">
-            <div className="questionCon">{ques}</div>
-            <div className="questionReq">
-            <TextArea
-                showCount
-                maxLength={255}
-                className="question-wordsInput-TextArea-con"
-                onChange={(e)=>{this.onChange_words(e,num)}}
-               size="large"
-              />
-            </div>
-          </div>
-        </div>{" "}
-      </div>
-      
-    )
-  }
 
   //开发过程中，如果选题有变动，动态获取，然后进行输入大致的调用如下
   //   <Checkbox.Group
@@ -205,6 +249,58 @@ class Question_page extends Component {
               }}
             ></Checkbox.Group> */
 
+  questionGroup = (data) => {
+    let rows = [];
+    data.forEach((item, index, arr) => {
+      //此处插入的标签中，必去有一个参数key去标识
+      rows.push(
+        <div className="question-all-body-each-con" key={index}>
+          {this.onTypeChoose(
+            item.question_id,
+            item.question_option,
+            item.question_name,
+            item.question_type
+          )}
+        </div>
+      );
+    });
+    return rows;
+  };
+
+  submit = () => {
+    let answer = [];
+    for (let i = 1; i <= this.state.num; i++) {
+      answer.push(this.state[i]);
+    }
+    this.setState({
+      onSubmit:true
+    })
+    Axios.post(SUBMIT_QUESTIONNAIRE_URL, qs.stringify({ answers: answer }))
+    .then((res) => res.data)
+    .then((res) => {
+      if (res.errorCode === 200) {
+        
+        message.success("提交成功");
+      } else {
+        //返回了不成功的状态码，提交失败
+        this.setState({
+          onSubmit:true
+        })
+        message.warn(res.message);
+      }
+    })
+    .catch((err) => {
+      this.setState({
+        onSubmit:true
+      })
+      message.error("信息提交失败");
+    });
+    console.log(answer);
+    this.props.history.push("/")
+  };
+  componentDidMount(){
+    console.log(this.props)
+  }
   render() {
     return (
       <div>
@@ -217,109 +313,14 @@ class Question_page extends Component {
           调查问卷
         </div>
         <div className="question-all-body">
-          <div className="question-all-body-each-con">
-            {this.multiChoose(
-              1,
-              [
-                {
-                  option: "A.我是A",
-                },
-                {
-                  option: "B.我是B",
-                },
-                {
-                  option: "C.我是C",
-                },
-                {
-                  option: "D.我是D",
-                },
-              ],
-              "这是一个测试用的问题，此测试用来测试多选题选项与问题的相关组件"
-            )}
-          </div>
-          <div className="question-all-body-each-con">
-            {this.multiChoose(
-              2,
-              [
-                {
-                  option: "A.我是A",
-                },
-                {
-                  option: "B.我是B",
-                },
-                {
-                  option: "C.我是C",
-                },
-                {
-                  option: "D.我是D",
-                },
-              ],
-              "这是一个测试用的问题，此测试用来测试多选题选项与问题的相关组件"
-            )}
-          </div>
-          <div className="question-all-body-each-con">
-            {this.sigleChoose(
-              3,
-              [
-                {
-                  option: "A.我是A",
-                },
-                {
-                  option: "B.我是B",
-                },
-                {
-                  option: "C.我是C",
-                },
-                {
-                  option: "D.我是D",
-                },
-              ],
-              "这是一个测试用的问题，此测试用来测试多选题选项与问题的相关组件"
-            )}
-          </div>{" "}
-          <div className="question-all-body-each-con">
-            {this.sigleChoose(
-              4,
-              [
-                {
-                  option: "A.我是A",
-                },
-                {
-                  option: "B.我是B",
-                },
-                {
-                  option: "C.我是C",
-                },
-                {
-                  option: "D.我是D",
-                },
-              ],
-              "这是一个测试用的问题，此测试用来测试多选题选项与问题的相关组件"
-            )}
-          </div>
-          <div className="question-all-body-each-con">
-            {this.wordsInput(
-              5,
-              [
-                {
-                  option: "A.我是A",
-                },
-                {
-                  option: "B.我是B",
-                },
-                {
-                  option: "C.我是C",
-                },
-                {
-                  option: "D.我是D",
-                },
-              ],
-              "这是一个测试用的问题，此测试用来测试多选题选项与问题的相关组件"
-            )}
-          </div>
+          {this.questionGroup(this.props.question.data.questionnaire)}
         </div>
         <div id="question-submit">
-          <Button id="question-submit-con" onClick={() => {}}>
+          <Button
+            id="question-submit-con"
+            onClick={this.submit}
+            disabled={this.state.onSubmit}
+          >
             提交
           </Button>
         </div>
@@ -331,10 +332,16 @@ class Question_page extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     data: state.Login,
+    question:state.Question,
   };
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
-  return {};
+  return {
+    getQuestion: () => {
+      
+
+    },
+  };
 };
 
 const Question = connect(mapStateToProps, mapDispatchToProps)(Question_page);

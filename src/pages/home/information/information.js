@@ -50,17 +50,9 @@ class Information_page extends Component {
   }
 
   componentDidMount() {
-    this.props.TimerRequest();
-    this.TimerRequest();
+   
   }
-  TimerRequest = () => {
-    if (this.props.login.isLogin === 2) {
-      setInterval(() => {
-        console.log("请求一遍");
-        this.props.TimerRequest();
-      }, 10000);
-    }
-  };
+  
   gotoLogin = () => {
     this.props.history.push("/login");
   };

@@ -9,4 +9,6 @@ export const REGISTER_URL = `${ROOT}/user/enroll`;//报名
 
 export const CHANGE_URL = `${ROOT}/usr/aspiration`;//修改志向
 
-export const QUESTIONNAIRE_URL = `${ROOT}/user/questionnaire`;//问卷
+export const GET_QUESTIONNAIRE_URL = `${ROOT}/user/questionnaire`;//问卷获取
+
+export const SUBMIT_QUESTIONNAIRE_URL = `${ROOT}/user/interview/questionnaire/submit`;//问卷提交

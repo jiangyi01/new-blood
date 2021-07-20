@@ -31,7 +31,12 @@
 .questionBody{
     width: 90%;
     float: left;
+   
 }
+.questionBody .ant-input{
+    height: 100px !important;
+}
+
 #question-submit{
 width: 300px;
 height: 150px;
@@ -54,3 +59,6 @@ color: #20004e;
     height: 100px !important;
 }
 
+.questionReq textarea.ant-input{
+    height: 100px;
+}

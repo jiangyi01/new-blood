@@ -17,6 +17,14 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 //登录失败
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 
+
+//问卷获取请求
+export const QUESTION_REQUEST = "QUESTION_REQUEST";
+//问卷获取成功
+export const QUESTION_SUCCESS = "QUESTION_SUCCESS";
+//问卷获取失败
+export const QUESTION_FAILURE = "QUESTION_FAILURE";
+
 //登录请求
 export const loginRequest = () => ({
   type: LOGIN_REQUEST,

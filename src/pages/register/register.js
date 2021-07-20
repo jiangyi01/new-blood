@@ -2,9 +2,17 @@ import { connect } from "react-redux";
 import React, { Component } from "react";
 import Axios from "axios";
 import "./register.css";
-import { REGISTER_URL } from "../../constants/requestURL";
+import {
+  REGISTER_URL,
+  GET_QUESTIONNAIRE_URL,
+} from "../../constants/requestURL";
 import qs from "qs";
 import { Input, Button, Cascader, message } from "antd";
+import {
+  QUESTION_REQUEST,
+  QUESTION_SUCCESS,
+  QUESTION_FAILURE,
+} from "../../redux/request.js";
 const { TextArea } = Input;
 
 class Register_page extends Component {
@@ -189,8 +197,22 @@ class Register_page extends Component {
             </div>
           </div>
           <div id="register-submit">
-            <Button id="register-submit-con" onClick={()=>{this.props.submit_test(this.props)}}>提交</Button>
-            <Button id="register-back-con" onClick={()=>{this.props.history.goBack();}}>返回</Button>
+            <Button
+              id="register-submit-con"
+              onClick={() => {
+                this.props.submit_test(this.props);
+              }}
+            >
+              提交
+            </Button>
+            <Button
+              id="register-back-con"
+              onClick={() => {
+                this.props.history.goBack();
+              }}
+            >
+              返回
+            </Button>
           </div>
         </div>
       </div>
@@ -206,16 +228,43 @@ const mapStateToProps = (state, ownProps) => {
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    sunmit: (props) => {
+    sunmit: (props, information) => {
       Axios.post(REGISTER_URL, qs.stringify({ username: "1" }))
         .then((res) => res.data)
         .then((res) => {
           if (res.errorCode === 200) {
             message.success("报名成功，请填写问卷");
-            props.history.push("/question");
+            Axios.post(
+              GET_QUESTIONNAIRE_URL,
+              qs.stringify({
+                depart1: information.depart1,
+                group1: information.group1,
+                depart2: information.depart2,
+                group2: information.group2,
+              })
+            )
+              .then((res) => res.data)
+              .then((res) => {
+                if (res.errorCode === 200) {
+                  dispatch({
+                    type: QUESTION_SUCCESS,
+                    payload: res.data,
+                  });
+                  props.history.push("/question");
+                } else {
+                  //返回了不成功的状态码，登陆失败
+                  dispatch({
+                    type: QUESTION_FAILURE,
+                    payload: res.errorMsg,
+                  });
+                  message.warn(res.message);
+                }
+              })
+              .catch((err) => {
+                message.error("获取问卷信息失败");
+              });
           } else {
             //返回了不成功的状态码，登陆失败
-
             message.warn(res.message);
           }
         })
@@ -225,6 +274,75 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     submit_test: (props) => {
       message.success("报名成功，请填写问卷");
+      dispatch({
+        type: QUESTION_SUCCESS,
+        payload: {
+          success: true,
+          errorCode: 200,
+          errorMsg: "成功",
+          data: {
+            questionnaire: [
+              {
+                question_id: "1",
+                question_type: "multiple",
+                question_name: "学线多选题1",
+                question_option: [
+                  {
+                    option: "A,我是A",
+                  },
+                  {
+                    option: "B,我是B",
+                  },
+                  {
+                    option: "C,我是C",
+                  },
+                  {
+                    option: "D,我是D",
+                  },
+                ],
+              },
+              {
+                question_id: "1",
+                question_type: "multiple",
+                question_name: "学线多选题2",
+                question_option: [
+                  {
+                    option: "A,我是A",
+                  },
+                  {
+                    option: "B,我是B",
+                  },
+                  {
+                    option: "C,我是C",
+                  },
+                  {
+                    option: "D,我是D",
+                  },
+                ],
+              },
+              {
+                question_id: "1",
+                question_type: "subjective",
+                question_name: "学线主观题3",
+                question_option: [
+                  {
+                    option: "A,我是A",
+                  },
+                  {
+                    option: "B,我是B",
+                  },
+                  {
+                    option: "C,我是C",
+                  },
+                  {
+                    option: "D,我是D",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      });
       props.history.push("/question");
     },
   };
