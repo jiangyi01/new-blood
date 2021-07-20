@@ -1,4 +1,4 @@
-export const ROOT = "http://8.131.52.114:7001/";
+export const ROOT = "http://8.131.52.114:7001";
 //TODO 测试地址，最终发布时改
 
 export const LOGIN_URL = `${ROOT}/login`;//登录

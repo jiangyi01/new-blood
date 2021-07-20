@@ -44,24 +44,24 @@ export const informationFailure = (error) => ({
 
 export const login = (userID, password) => (dispatch) => {
   dispatch(loginRequest());
-  return Axios.post(LOGIN_URL, qs.stringify({ u: userID, p: password }))
+  
+  return Axios.post(LOGIN_URL, qs.stringify({ username: userID, password: password }))
     .then((res) => res.data)
     .then((res) => {
+      
       if (res.errorCode === 200) {
         //登录成功
-
+        console.log(res)
         //将请求得到的data加入请求头中
-        Axios.defaults.headers.common["token"] = res.data.token;
+        //Axios.defaults.headers.common["token"] = res.data.token;
         //把token和refresh_token存进本地
-        localStorage.setItem(
-          "token",
-          JSON.stringify({ Token: res.data.token })
-        );
-        dispatch(loginSuccess(res));
+        
+        //dispatch(loginSuccess(res));
         message.success("登录成功");
       } else {
         //返回了不成功的状态码，登陆失败
-        dispatch(loginFailure(res.errorMsg));
+        //dispatch(loginFailure(res.errorMsg));
+        console.log(res)
         message.warn(res.errorMsg);
       }
     })
