@@ -1,7 +1,7 @@
 
 import { connect } from "react-redux";
 import React, { Component } from "react";
-import { login } from "../../redux/request";
+import { login,login_test } from "../../redux/request";
 import { Button, Input, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "./login.css";
@@ -114,7 +114,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     loginRequest: async (username, password) => {
       if(username!==""&&password!==""){
-        return dispatch(login(username, password));
+        return dispatch(login_test(username, password));
       }else {
         message.info("请填写完整");
         return new Promise(()=>{return "成功"},()=>{return "失败"})

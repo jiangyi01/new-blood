@@ -37,12 +37,8 @@ const chosenTagNum = (data) => {
         {chosenTag(2, data.depart2, data.group2, data.number2)}
       </div>
     );
-  }else if(data.depart1 !== "" && data.depart2 === ""){
-    return (
-      <div>
-        {chosenTag(1, data.depart1, data.group1, data.number1)}
-      </div>
-    );
+  } else if (data.depart1 !== "" && data.depart2 === "") {
+    return <div>{chosenTag(1, data.depart1, data.group1, data.number1)}</div>;
   }
   return <div></div>;
 };
@@ -54,7 +50,8 @@ class Information_page extends Component {
   }
 
   componentDidMount() {
-    //this.TimerRequest();
+    this.props.TimerRequest();
+    this.TimerRequest();
   }
   TimerRequest = () => {
     if (this.props.login.isLogin === 2) {
@@ -68,6 +65,9 @@ class Information_page extends Component {
     this.props.history.push("/login");
   };
 
+  gotoRegister=()=>{
+    this.props.history.push("/register");
+  }
   render() {
     return (
       <div>
@@ -76,13 +76,17 @@ class Information_page extends Component {
             {this.props.login.isLogin === 2 ? (
               <div className="informationPanelTag">
                 <div id="informationPanelHeadTag">
-                  <div className="informationHeadTag">{this.props.information.data.name}</div>
-                  <div className="informationHeadTag">{this.props.information.data.area}</div>
-                  <div className="informationHeadTag">{this.props.login.data.username}</div>
+                  <div className="informationHeadTag">
+                    {this.props.information.data.name}
+                  </div>
+                  <div className="informationHeadTag">
+                    {this.props.information.data.area}
+                  </div>
+                  <div className="informationHeadTag">
+                    {this.props.login.data.username}
+                  </div>
                 </div>
-                <div id="informationHeadImg">
-
-                </div>
+                <div id="informationHeadImg"></div>
               </div>
             ) : (
               <div className="informationPanelTag">
@@ -115,12 +119,12 @@ class Information_page extends Component {
                   <div className="informationButtonUpletter">
                     注意：您可在X⽉X⽇X时前修改您的报名意向
                   </div>
-                  <Button id="informationButtonRegister">
-                    {this.props.information.data.depart1 !== "" &&
-                    this.props.login.isLogin === 2
-                      ? "修改志向"
-                      : "纳新报名"}
-                  </Button>
+                  {this.props.information.data.depart1 !== "" &&
+                  this.props.login.isLogin === 2 ? (
+                    <Button id="informationButtonRegister">修改志向</Button>
+                  ) : (
+                    <Button id="informationButtonRegister" onClick={this.gotoRegister}>纳新报名</Button>
+                  )}
                 </div>
                 <div className="informationButton">
                   <Button id="informationButtonExit">退出账号</Button>
