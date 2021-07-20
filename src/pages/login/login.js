@@ -114,7 +114,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     loginRequest: async (username, password) => {
       if(username!==""&&password!==""){
-        return dispatch(login_test(username, password));
+        return dispatch(login(username, password));
       }else {
         message.info("请填写完整");
         return new Promise(()=>{return "成功"},()=>{return "失败"})

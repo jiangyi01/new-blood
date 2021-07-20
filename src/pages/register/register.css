@@ -126,3 +126,9 @@ margin-top: 20px;
 
   color: #20004e;
 }
+.ant-input{
+  height: 40px !important;
+}
+#register-self-introduction-TextArea-con.ant-input {
+height: 100px !important;
+}
