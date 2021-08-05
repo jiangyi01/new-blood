@@ -2,9 +2,12 @@ import { connect } from "react-redux";
 import React, { Component } from "react";
 import "./question.css";
 import Axios from "axios";
-import {SUBMIT_QUESTIONNAIRE_URL,GET_QUESTIONNAIRE_URL} from '../../constants/requestURL.js'
-import qs from 'qs'
-import { Checkbox, Row, Col, Radio, Space, Button, Input ,message} from "antd";
+import {
+  SUBMIT_QUESTIONNAIRE_URL,
+  GET_QUESTIONNAIRE_URL,
+} from "../../constants/requestURL.js";
+import qs from "qs";
+import { Checkbox, Row, Col, Radio, Space, Button, Input, message } from "antd";
 const { TextArea } = Input;
 class Question_page extends Component {
   constructor(props) {
@@ -273,33 +276,32 @@ class Question_page extends Component {
       answer.push(this.state[i]);
     }
     this.setState({
-      onSubmit:true
-    })
-    Axios.post(SUBMIT_QUESTIONNAIRE_URL, qs.stringify({ answers: answer }))
-    .then((res) => res.data)
-    .then((res) => {
-      if (res.errorCode === 200) {
-        
-        message.success("提交成功");
-      } else {
-        //返回了不成功的状态码，提交失败
-        this.setState({
-          onSubmit:true
-        })
-        message.warn(res.message);
-      }
-    })
-    .catch((err) => {
-      this.setState({
-        onSubmit:true
-      })
-      message.error("信息提交失败");
+      onSubmit: true,
     });
+    Axios.post(SUBMIT_QUESTIONNAIRE_URL, qs.stringify({ answers: answer }))
+      .then((res) => res.data)
+      .then((res) => {
+        if (res.errorCode === 200) {
+          message.success("提交成功");
+        } else {
+          //返回了不成功的状态码，提交失败
+          this.setState({
+            onSubmit: true,
+          });
+          message.warn(res.message);
+        }
+      })
+      .catch((err) => {
+        this.setState({
+          onSubmit: true,
+        });
+        message.error("信息提交失败");
+      });
     console.log(answer);
-    this.props.history.push("/")
+    this.props.history.push("/");
   };
-  componentDidMount(){
-    console.log(this.props)
+  componentDidMount() {
+    console.log(this.props);
   }
   render() {
     return (
@@ -332,15 +334,12 @@ class Question_page extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     data: state.Login,
-    question:state.Question,
+    question: state.Question,
   };
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    getQuestion: () => {
-      
-
-    },
+    getQuestion: () => {},
   };
 };
 

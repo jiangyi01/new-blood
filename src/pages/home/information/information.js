@@ -49,17 +49,18 @@ class Information_page extends Component {
     this.state = {};
   }
 
-  componentDidMount() {
-   
-  }
-  
+  componentDidMount() {}
+
   gotoLogin = () => {
     this.props.history.push("/login");
   };
 
-  gotoRegister=()=>{
+  gotoRegister = () => {
     this.props.history.push("/register");
-  }
+  };
+  gotoChangeRegister = () => {
+    this.props.history.push("/register");
+  };
   render() {
     return (
       <div>
@@ -113,9 +114,19 @@ class Information_page extends Component {
                   </div>
                   {this.props.information.data.depart1 !== "" &&
                   this.props.login.isLogin === 2 ? (
-                    <Button id="informationButtonRegister">修改志向</Button>
+                    <Button
+                      id="informationButtonRegister"
+                      onClick={this.gotoChangeRegister}
+                    >
+                      修改志向
+                    </Button>
                   ) : (
-                    <Button id="informationButtonRegister" onClick={this.gotoRegister}>纳新报名</Button>
+                    <Button
+                      id="informationButtonRegister"
+                      onClick={this.gotoRegister}
+                    >
+                      纳新报名
+                    </Button>
                   )}
                 </div>
                 <div className="informationButton">
