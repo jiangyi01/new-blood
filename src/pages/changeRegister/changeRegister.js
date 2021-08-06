@@ -1,12 +1,11 @@
 import { connect } from "react-redux";
 import React, { Component } from "react";
 import "./register.css";
-
 import { Input, Button, Cascader } from "antd";
 import {
   get_Groups_info,
   get_Questionair_info,
-  register,
+  changeRegister,
   REGISTER_SUCCESS,
 } from "../../redux/request.js";
 const { TextArea } = Input;
@@ -225,7 +224,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     sunmit: async (data, props) => {
       console.log(data);
-      let result = await register(data);
+      let result = await changeRegister(data);
       if (result === REGISTER_SUCCESS) {
         await dispatch(
           get_Questionair_info({
@@ -269,6 +268,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   };
 };
 
-const Register = connect(mapStateToProps, mapDispatchToProps)(Register_page);
+const ChangeRegister = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Register_page);
 
-export default Register;
+export default ChangeRegister;

@@ -116,11 +116,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         return dispatch(login(username, password));
       } else {
         message.info("请填写完整");
-        return new Promise(
-          () => {
-            return "成功";
-          }
-        );
+        return new Promise(() => {
+          return "成功";
+        });
       }
     },
   };

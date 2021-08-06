@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Button } from "antd";
 import "./information.css";
 import { UserOutlined } from "@ant-design/icons";
+import { statusGetInfoUnAva } from "../../../redux/request";
 const chosenTag = (num, depart, group, positionNum) => {
   return (
     <div className="chosenTagBar">
@@ -50,15 +51,26 @@ class Information_page extends Component {
 
   componentDidMount() {}
 
+  cutTimer=(ctime)=>{
+    this.props.cutTimer().then(()=>{
+      if(!this.props.status.get_info_isAvail){
+        clearInterval(ctime)
+      }
+    });
+  }
+
   gotoLogin = () => {
     this.props.history.push("/login");
   };
 
   gotoRegister = () => {
+    //this.cutTimer(this.props.ctime)
     this.props.history.push("/register");
+   
   };
   gotoChangeRegister = () => {
-    this.props.history.push("/register");
+    //this.cutTimer(this.props.ctime)
+    this.props.history.push("/change");
   };
   render() {
     return (
@@ -75,7 +87,7 @@ class Information_page extends Component {
                     {this.props.information.data.area}
                   </div>
                   <div className="informationHeadTag">
-                    {this.props.login.data.username}
+                    {this.props.information.data.username}
                   </div>
                 </div>
                 <div id="informationHeadImg"></div>
@@ -153,6 +165,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     login: state.Login,
     information: state.Information,
+    status:state.Status
   };
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -162,6 +175,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     TimerRequest: () => {
       //dispatch(information_test("1", "2"));
+    },
+    cutTimer:()=>{
+      dispatch(statusGetInfoUnAva());
+      return new Promise((res,rej)=>{
+        res("changeStatus")
+      })
     },
   };
 };

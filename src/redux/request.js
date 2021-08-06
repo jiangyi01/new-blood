@@ -41,7 +41,15 @@ export const GROUPS_FAILURE = "GROUPS_FAILURE";
 
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAILURE = "REGISTER_FAILURE";
+export const STATUS_GET_INFORMATION_AVAIL="STATUS_GET_INFORMATION_AVAIL";
+export const STATUS_GET_INFORMATION_UNAVA="STATUS_GET_INFORMATION_UNAVA";
 
+export const statusGetInfoAvail=()=>({
+  type:STATUS_GET_INFORMATION_AVAIL
+})
+export const statusGetInfoUnAva=()=>({
+  type:STATUS_GET_INFORMATION_UNAVA
+})
 export const groupsRequest = () => ({
   type: GROUPS_REQUEST,
 });
@@ -222,7 +230,7 @@ export const changeRegister = (data) => {
     qs.stringify({
       phone: data.phone,
       qq: data.qq,
-      introduce: data.introduce,
+      introduce: data.introduction,
       depart1: data.depart1,
       group1: data.group1,
       depart2: data.depart2,
@@ -232,16 +240,22 @@ export const changeRegister = (data) => {
     .then((res) => res.data)
     .then((res) => {
       if (res.errorCode === 200) {
-        return REGISTER_SUCCESS;
+        return new Promise((resolve, reject) => {
+          resolve(REGISTER_SUCCESS);
+        });
       } else {
         //返回了不成功的状态码，登陆失败
-        message.warn(res.message);
-        return REGISTER_FAILURE;
+        message.warn(res.errorMsg);
+        return new Promise((resolve, reject) => {
+          resolve(REGISTER_FAILURE);
+        });
       }
     })
     .catch((err) => {
       message.error("获取信息失败");
-      return REGISTER_FAILURE;
+      return new Promise((resolve, reject) => {
+        resolve(REGISTER_FAILURE);
+      });
     });
 };
 export const get_Questionair_info = (data) => (dispatch) => {
@@ -279,16 +293,22 @@ export const get_Questionair_info = (data) => (dispatch) => {
 export const ANSWERS_SUCCESS = "ANSWERS_SUCCESS";
 export const ANSWERS_FAILURE = "ANSWERS_FAILURE";
 
-export const submit_question = (answer) => {
+export const submit_question = (answers,num) => {
   Axios.defaults.headers.common["token"] = JSON.parse(
     localStorage.getItem("loginState")
   ).data.token;
   console.log(Axios.defaults.headers.common["token"]);
+  console.log({
+    answers:answers,
+    num:num
+  })
   return Axios.post(
     SUBMIT_QUESTIONNAIRE_URL,
     qs.stringify({
-      answers: answer,
-    })
+      answers:answers,
+      num:num
+    }
+    )
   )
     .then((res) => res.data)
     .then((res) => {

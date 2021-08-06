@@ -264,7 +264,7 @@ class Question_page extends Component {
       rows.push(
         <div className="question-all-body-each-con" key={index}>
           {this.onTypeChoose(
-            item.question_id,
+            index+1,
             item.question_option,
             item.question_name,
             item.question_type
@@ -353,15 +353,15 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     submit: async (data, num, props) => {
       let answer = [];
       for (let i = 1; i <= num; i++) {
-        answer.push(data[i]);
+        answer.push( data[i]);
       }
       console.log(data, num, answer);
-      let result = await submit_question(answer);
+      let result = await submit_question(answer,num);
       console.log(result);
       if (result === ANSWERS_SUCCESS) {
-        props.history.push("/")
+        props.history.push("/");
       } else {
-        props.history.push("/")
+        props.history.push("/");
       }
     },
   };

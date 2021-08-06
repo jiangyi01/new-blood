@@ -12,6 +12,7 @@ import Register from "./pages/register/register";
 import Login from "./pages/login/login";
 import "antd/dist/antd.css";
 import Information from "./pages/home/information/information";
+import ChangeRegister from "./pages/changeRegister/changeRegister";
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
@@ -20,9 +21,9 @@ ReactDOM.render(
           <Route exact path="/" component={Home} />
           <Route exact path="/question" component={Question} />
           <Route exact path="/register" component={Register} />
-          <Route exact path="/login" component={Login} />{" "}
+          <Route exact path="/login" component={Login} />
           <Route exact path="/information" component={Information} />
-        
+          <Route exact path="/change" component={ChangeRegister} />
         </Switch>
       </Router>
     </Provider>

@@ -4,11 +4,24 @@ import React, { Component } from "react";
 
 import "./home.css";
 import Introduce from "./introduce/introduce";
-import { information } from "../../redux/request";
+import { information, statusGetInfoAvail, statusGetInfoUnAva } from "../../redux/request";
 import { Button } from "antd";
 import Information from "./information/information";
 import introduce from '../../constants/img/introduce.png'
 import informationPic from '../../constants/img/mesage.png'
+
+let ctime;
+
+const timed = (props)=>{
+  ctime=setInterval(() => {
+  console.log("请求一遍");
+  if (props.login.isLogin === 2)
+  props.TimerRequest();
+  if(!props.status.get_info_isAvail){
+    clearInterval(ctime)
+  }
+}, 5000);}
+
 class Home_page extends Component {
   constructor(props) {
     super(props);
@@ -19,33 +32,40 @@ class Home_page extends Component {
 
   componentDidMount() {
     console.log(this.props);
-    if (this.props.login.isLogin === 2) {
-      setInterval(() => {
-        console.log("请求一遍");
-        this.props.TimerRequest();
-      }, 10000);
-    }
+    //ctime=timed(this.props)
+    timed(this.props)
   }
 
-  
+  cutTimer=()=>{
+    this.props.cutTimer().then(()=>{
+      if(!this.props.status.get_info_isAvail){
+        clearInterval(ctime)
+      }
+    });
+  }
+
 
   changeHomeWindow_Info = (type) => {
     this.setState({
       chosen: 1,
+    });
+    this.props.startTimer().then(()=>{
+    timed(this.props)
     });
   };
   changeHomeWindow_Intr = (type) => {
     this.setState({
       chosen: 0,
     });
+    this.cutTimer();
   };
   render() {
     return (
       <div className="bodyHome">
         {this.state.chosen === 0 ? (
-          <Introduce history={this.props.history} />
+          <Introduce history={this.props.history}  />
         ) : (
-          <Information history={this.props.history} />
+          <Information history={this.props.history} cutTime={ctime}/>
         )}
         <div id="footer">
           <Button onClick={this.changeHomeWindow_Intr} id="footerButtonIntr">
@@ -66,6 +86,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     login: state.Login,
     information: state.Information,
+    status:state.Status,
+
   };
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -76,6 +98,18 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     TimerRequest: () => {
       dispatch(information());
     },
+    cutTimer:()=>{
+      dispatch(statusGetInfoUnAva());
+      return new Promise((res,rej)=>{
+        res("changeStatus")
+      })
+    },
+    startTimer:()=>{
+      dispatch(statusGetInfoAvail());
+      return new Promise((res,rej)=>{
+        res("changeStatus");
+      })
+    }
   };
 };
 
