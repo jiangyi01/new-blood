@@ -1,7 +1,7 @@
 import {
-    QUESTION_REQUEST,
-    QUESTION_SUCCESS,
-    QUESTION_FAILURE,
+    GROUPS_SUCCESS,
+    GROUPS_REQUEST,
+    GROUPS_FAILURE,
   } from "../request";
   const defaultState={
     data: {
@@ -11,21 +11,22 @@ import {
     errorCode: 200,
     errorMsg: "",
   };
-  export default function Question(state = defaultState, action) {
+  export default function Groups(state = defaultState, action) {
     switch (action.type) {
-      case QUESTION_REQUEST:
+      case GROUPS_REQUEST:
         return {
           ...state,
         };
-      case QUESTION_SUCCESS:
+      case GROUPS_SUCCESS:
         return {
           ...state,
-          data: action.payload.data,
+          data: { ...action.payload.data },
+  
           success: action.payload.success,
           errorCode: action.payload.errorCode,
           errorMsg: action.payload.errorMsg,
         };
-      case QUESTION_FAILURE:
+      case GROUPS_FAILURE:
         return {
           ...state,
   

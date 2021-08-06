@@ -8,6 +8,11 @@ import {
 } from "../../constants/requestURL.js";
 import qs from "qs";
 import { Checkbox, Row, Col, Radio, Space, Button, Input, message } from "antd";
+import {
+  ANSWERS_SUCCESS,
+  get_Questionair_info,
+  submit_question,
+} from "../../redux/request";
 const { TextArea } = Input;
 class Question_page extends Component {
   constructor(props) {
@@ -320,7 +325,13 @@ class Question_page extends Component {
         <div id="question-submit">
           <Button
             id="question-submit-con"
-            onClick={this.submit}
+            onClick={() => {
+              this.props.submit(
+                this.state,
+                this.props.question.data.questionnaire.length,
+                this.props
+              );
+            }}
             disabled={this.state.onSubmit}
           >
             提交
@@ -339,7 +350,20 @@ const mapStateToProps = (state, ownProps) => {
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    getQuestion: () => {},
+    submit: async (data, num, props) => {
+      let answer = [];
+      for (let i = 1; i <= num; i++) {
+        answer.push(data[i]);
+      }
+      console.log(data, num, answer);
+      let result = await submit_question(answer);
+      console.log(result);
+      if (result === ANSWERS_SUCCESS) {
+        props.history.push("/")
+      } else {
+        props.history.push("/")
+      }
+    },
   };
 };
 

@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { Button } from "antd";
 import "./information.css";
 import { UserOutlined } from "@ant-design/icons";
-import { information_test } from "../../../redux/request";
 const chosenTag = (num, depart, group, positionNum) => {
   return (
     <div className="chosenTagBar">
@@ -162,7 +161,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       console.log(ownProps);
     },
     TimerRequest: () => {
-      dispatch(information_test("1", "2"));
+      //dispatch(information_test("1", "2"));
     },
   };
 };

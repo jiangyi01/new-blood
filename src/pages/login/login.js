@@ -1,7 +1,6 @@
-
 import { connect } from "react-redux";
 import React, { Component } from "react";
-import { login,login_test } from "../../redux/request";
+import { login } from "../../redux/request";
 import { Button, Input, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "./login.css";
@@ -18,9 +17,9 @@ class Login_page extends Component {
   componentDidMount() {
     console.log(this.props);
     //这里以后会改成调用存储的账号和密码来进行自动登录
-    if (this.props.login.isLogin === 0) {
+    if (this.props.login.isLogin !== 2) {
       message.info("请登录");
-    } else if (this.props.login.isLogin === 2) {
+    } else {
       this.props.history.push("/information");
     }
   }
@@ -52,9 +51,9 @@ class Login_page extends Component {
       case 2:
         this.props.history.push("/");
         break;
-        case 3:
-         message.error("登陆失败")
-          break;
+      case 3:
+        message.error("登陆失败");
+        break;
       default:
         break;
     }
@@ -113,13 +112,16 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     loginRequest: async (username, password) => {
-      if(username!==""&&password!==""){
+      if (username !== "" && password !== "") {
         return dispatch(login(username, password));
-      }else {
+      } else {
         message.info("请填写完整");
-        return new Promise(()=>{return "成功"},()=>{return "失败"})
+        return new Promise(
+          () => {
+            return "成功";
+          }
+        );
       }
-      
     },
   };
 };
@@ -127,4 +129,3 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const Login = connect(mapStateToProps, mapDispatchToProps)(Login_page);
 
 export default Login;
-

@@ -1,15 +1,14 @@
 
 import { connect } from "react-redux";
 import React, { Component } from "react";
-import { Redirect, Link } from "react-router-dom";
-import userStatus from "../../constants/login";
+
 import "./home.css";
 import Introduce from "./introduce/introduce";
-import { information_test } from "../../redux/request";
+import { information } from "../../redux/request";
 import { Button } from "antd";
 import Information from "./information/information";
 import introduce from '../../constants/img/introduce.png'
-import information from '../../constants/img/mesage.png'
+import informationPic from '../../constants/img/mesage.png'
 class Home_page extends Component {
   constructor(props) {
     super(props);
@@ -55,7 +54,7 @@ class Home_page extends Component {
 
 
           <Button onClick={this.changeHomeWindow_Info} id="footerButtonInfo">
-            <div><img src={information} className="changeHomeWindow-img"></img></div>个人主页
+            <div><img src={informationPic} className="changeHomeWindow-img"></img></div>个人主页
           </Button>
         </div>
       </div>
@@ -75,7 +74,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       console.log(ownProps);
     },
     TimerRequest: () => {
-      dispatch(information_test("1", "2"));
+      dispatch(information());
     },
   };
 };
