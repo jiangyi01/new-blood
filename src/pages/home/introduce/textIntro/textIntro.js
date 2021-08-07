@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Button, Modal } from "antd";
-import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import "./textIntro.css";
 import logo from "../../../../constants/img/logo.png";
@@ -25,7 +24,10 @@ class TextIntro_page extends Component {
         visible_unlogin: false,
       });
       if (this.props.information.depart1 !== "") {
+        this.props.history.push("/change")
+      }else{
         this.props.history.push("/register")
+
       }
     }
   }
@@ -52,13 +54,38 @@ class TextIntro_page extends Component {
   componentDidMount() {
     console.log(this.props);
   }
+
+
+  conBar=(props)=>{
+    let con = [];
+    props.map((value,index,array)=>{
+      let list=[];
+      value.con.map((v,i,a)=>{
+        list.push(<div key={i+index*10}>{v}</div>)
+      })
+      con.push(
+      <div className="introduceCard" key={index}>
+        <div className="introduceCardBack">
+           <div className="introduceCardTitle">
+          {value.departName}
+        </div>
+        <div className="introduceCardCon">
+          {list}
+        </div>
+        </div>
+       
+      </div>)
+    })
+    con.push(<div className="introduceConblock" key={props.length+1}></div>)
+    return con;
+  }
   render() {
     return (
       <div id="intro-con">
         <div id="intro-con-logo">
           <img src={logo} id="introLogo"></img>
         </div>
-        <div className="intro-con-letter">{this.props.num}</div>
+        <div className="intro-con-letter">{this.conBar(this.props.con)}</div>
         <div className="intro-btm-footer">
           <div className="intro-btm">
             <Button

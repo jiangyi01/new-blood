@@ -21,7 +21,6 @@ import {
         return {
           ...state,
           data: { ...action.payload.data },
-  
           success: action.payload.success,
           errorCode: action.payload.errorCode,
           errorMsg: action.payload.errorMsg,

@@ -3,9 +3,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: wheat;
+  background-image: url('../../constants/img/loginbg.jpg');
   background-size: cover;
-
   position: absolute;
   top: 0;
   bottom: 0;

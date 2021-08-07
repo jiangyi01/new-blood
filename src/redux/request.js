@@ -17,6 +17,8 @@ export const INFORMATION_REQUEST = "INFORMATION_REQUEST";
 export const INFORMATION_SUCCESS = "INFORMATION_SUCCESS";
 //信息获取失败
 export const INFORMATION_FAILURE = "INFORMATION_FAILURE";
+//信息重置
+export const INFORMATION_RESET = "INFORMATION_RESET";
 
 //登录请求
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
@@ -24,6 +26,8 @@ export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 //登录失败
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
+//登录重置
+export const LOGIN_RESET = "LOGIN_RESET";
 
 //问卷获取请求
 export const QUESTION_REQUEST = "QUESTION_REQUEST";
@@ -41,15 +45,14 @@ export const GROUPS_FAILURE = "GROUPS_FAILURE";
 
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAILURE = "REGISTER_FAILURE";
-export const STATUS_GET_INFORMATION_AVAIL="STATUS_GET_INFORMATION_AVAIL";
-export const STATUS_GET_INFORMATION_UNAVA="STATUS_GET_INFORMATION_UNAVA";
-
-export const statusGetInfoAvail=()=>({
-  type:STATUS_GET_INFORMATION_AVAIL
-})
-export const statusGetInfoUnAva=()=>({
-  type:STATUS_GET_INFORMATION_UNAVA
-})
+export const STATUS_GET_INFORMATION_AVAIL = "STATUS_GET_INFORMATION_AVAIL";
+export const STATUS_GET_INFORMATION_UNAVA = "STATUS_GET_INFORMATION_UNAVA";
+export const statusGetInfoAvail = () => ({
+  type: STATUS_GET_INFORMATION_AVAIL,
+});
+export const statusGetInfoUnAva = () => ({
+  type: STATUS_GET_INFORMATION_UNAVA,
+});
 export const groupsRequest = () => ({
   type: GROUPS_REQUEST,
 });
@@ -86,6 +89,9 @@ export const loginFailure = (error) => ({
   type: LOGIN_FAILURE,
   payload: error,
 });
+export const loginReset = () => ({
+  type: LOGIN_RESET,
+});
 
 export const informationRequest = () => ({
   type: INFORMATION_REQUEST,
@@ -98,7 +104,17 @@ export const informationFailure = (error) => ({
   type: INFORMATION_FAILURE,
   payload: error,
 });
+export const informationReset = () => ({
+  type: INFORMATION_RESET,
+});
 
+export const getRooken = () => {
+  if (JSON.parse(localStorage.getItem("loginState")) !== null) {
+    return JSON.parse(localStorage.getItem("loginState")).data.token;
+  } else {
+    return "";
+  }
+};
 export const login = (userID, password) => (dispatch) => {
   dispatch(loginRequest());
 
@@ -119,7 +135,7 @@ export const login = (userID, password) => (dispatch) => {
         message.success("登录成功");
       } else {
         //返回了不成功的状态码，登陆失败
-        //dispatch(loginFailure(res.errorMsg));
+        dispatch(loginFailure(res.errorMsg));
         console.log(res);
         message.warn(res.errorMsg);
       }
@@ -132,9 +148,7 @@ export const login = (userID, password) => (dispatch) => {
 
 //获取用户信息请求
 export const information = () => (dispatch) => {
-  Axios.defaults.headers.common["token"] = JSON.parse(
-    localStorage.getItem("loginState")
-  ).data.token;
+  Axios.defaults.headers.common["token"] = getRooken();
 
   dispatch(informationRequest());
   return Axios.post(GET_USER_INFO_URL)
@@ -157,9 +171,7 @@ export const information = () => (dispatch) => {
 };
 
 export const get_Groups_info = () => (dispatch) => {
-  Axios.defaults.headers.common["token"] = JSON.parse(
-    localStorage.getItem("loginState")
-  ).data.token;
+  Axios.defaults.headers.common["token"] = getRooken();
   dispatch(groupsRequest());
   return Axios.post(GET_QUESTION_SCROLL_URL)
     .then((res) => res.data)
@@ -182,9 +194,7 @@ export const get_Groups_info = () => (dispatch) => {
 };
 
 export const register = (data) => {
-  Axios.defaults.headers.common["token"] = JSON.parse(
-    localStorage.getItem("loginState")
-  ).data.token;
+  Axios.defaults.headers.common["token"] = getRooken();
   return Axios.post(
     REGISTER_URL,
     qs.stringify({
@@ -221,9 +231,7 @@ export const register = (data) => {
 };
 
 export const changeRegister = (data) => {
-  Axios.defaults.headers.common["token"] = JSON.parse(
-    localStorage.getItem("loginState")
-  ).data.token;
+  Axios.defaults.headers.common["token"] = getRooken();
 
   return Axios.post(
     CHANGE_URL,
@@ -259,9 +267,7 @@ export const changeRegister = (data) => {
     });
 };
 export const get_Questionair_info = (data) => (dispatch) => {
-  Axios.defaults.headers.common["token"] = JSON.parse(
-    localStorage.getItem("loginState")
-  ).data.token;
+  Axios.defaults.headers.common["token"] = getRooken();
   dispatch(questionRequest());
   return Axios.post(
     GET_QUESTIONNAIRE_URL,
@@ -293,22 +299,19 @@ export const get_Questionair_info = (data) => (dispatch) => {
 export const ANSWERS_SUCCESS = "ANSWERS_SUCCESS";
 export const ANSWERS_FAILURE = "ANSWERS_FAILURE";
 
-export const submit_question = (answers,num) => {
-  Axios.defaults.headers.common["token"] = JSON.parse(
-    localStorage.getItem("loginState")
-  ).data.token;
+export const submit_question = (answers, num) => {
+  Axios.defaults.headers.common["token"] = getRooken();
   console.log(Axios.defaults.headers.common["token"]);
   console.log({
-    answers:answers,
-    num:num
-  })
+    answers: answers,
+    num: num,
+  });
   return Axios.post(
     SUBMIT_QUESTIONNAIRE_URL,
     qs.stringify({
-      answers:answers,
-      num:num
-    }
-    )
+      answers: answers,
+      num: num,
+    })
   )
     .then((res) => res.data)
     .then((res) => {
@@ -337,6 +340,10 @@ export const submit_question = (answers,num) => {
     });
 };
 
-export const runAway=()=>{
-  console.log("退出")
-}
+export const runAway = () => (dispatch) => {
+  dispatch(loginFailure("退出账号"));
+  dispatch(informationReset());
+  Axios.defaults.headers.common["token"] = null;
+  localStorage.clear();
+  console.log("shutdown");
+};

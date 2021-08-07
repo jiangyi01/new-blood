@@ -23,7 +23,7 @@ const timed = (props)=>{
   if(!props.status.get_info_isAvail){
     clearInterval(ctime)
   }
-}, 5000);}
+}, 30000);}
 
 class Home_page extends Component {
   constructor(props) {

@@ -2,7 +2,8 @@ import { connect } from "react-redux";
 import React, { Component } from "react";
 import "./register.css";
 
-import { Input, Button, Cascader } from "antd";
+import { Input, Button, Cascader, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import {
   get_Groups_info,
   get_Questionair_info,
@@ -10,6 +11,7 @@ import {
   REGISTER_SUCCESS,
 } from "../../redux/request.js";
 const { TextArea } = Input;
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 class Register_page extends Component {
   constructor(props) {
@@ -30,25 +32,29 @@ class Register_page extends Component {
 
   componentDidMount() {
     this.props.getGroups().then(() => {
-      let optionCon = [];
-      this.props.groups.data.groups.map((value, index, array) => {
-        let departs = [];
-        value.departs.map((v) => {
-          departs.push({
-            value: v,
-            label: v,
+      if (this.props.groups.success && this.props.groups.errorCode === 200) {
+        let optionCon = [];
+        this.props.groups.data.groups.map((value, index, array) => {
+          let departs = [];
+          value.departs.map((v) => {
+            departs.push({
+              value: v,
+              label: v,
+            });
+          });
+          optionCon.push({
+            value: value.groupName,
+            label: value.groupName,
+            children: departs,
           });
         });
-        optionCon.push({
-          value: value.groupName,
-          label: value.groupName,
-          children: departs,
+        this.setState({
+          options: optionCon,
         });
-      });
-      this.setState({
-        options: optionCon,
-      });
-      console.log(optionCon);
+        console.log(optionCon);
+      } else {
+        this.props.history("/");
+      }
     });
   }
 
@@ -99,7 +105,7 @@ class Register_page extends Component {
   };
 
   render() {
-    return (
+    return this.props.groups.success && this.props.groups.errorCode === 200 ? (
       <div>
         <div id="register-head">报名表</div>
         <div id="register-position-campus">
@@ -208,6 +214,25 @@ class Register_page extends Component {
               返回
             </Button>
           </div>
+        </div>
+      </div>
+    ) : (
+      <div className="unGet-register-body">
+        <div id="register-head">报名表</div>
+        <div className="unGet-register-spin-outer">
+          <div className="register-spin">
+            <Spin indicator={antIcon} />
+          </div>
+        </div>
+        <div id="register-submit">
+          <Button
+            id="register-back-con"
+            onClick={() => {
+              this.props.history.goBack();
+            }}
+          >
+            返回
+          </Button>
         </div>
       </div>
     );

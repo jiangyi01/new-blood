@@ -1,7 +1,8 @@
 import { connect } from "react-redux";
 import React, { Component } from "react";
 import "./register.css";
-import { Input, Button, Cascader } from "antd";
+import { Input, Button, Cascader, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import {
   get_Groups_info,
   get_Questionair_info,
@@ -9,7 +10,7 @@ import {
   REGISTER_SUCCESS,
 } from "../../redux/request.js";
 const { TextArea } = Input;
-
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 class Register_page extends Component {
   constructor(props) {
     super(props);
@@ -28,26 +29,40 @@ class Register_page extends Component {
   }
 
   componentDidMount() {
-    this.props.getGroups().then(() => {
-      let optionCon = [];
-      this.props.groups.data.groups.map((value, index, array) => {
-        let departs = [];
-        value.departs.map((v) => {
-          departs.push({
-            value: v,
-            label: v,
+    this.props.getGroups().then((res) => {
+      if (this.props.groups.success && this.props.groups.errorCode === 200) {
+        let optionCon = [];
+        this.props.groups.data.groups.map((value, index, array) => {
+          let departs = [];
+          value.departs.map((v) => {
+            departs.push({
+              value: v,
+              label: v,
+            });
+          });
+          optionCon.push({
+            value: value.groupName,
+            label: value.groupName,
+            children: departs,
           });
         });
         optionCon.push({
-          value: value.groupName,
-          label: value.groupName,
-          children: departs,
+          value: "",
+          label: "取消",
+          children: [
+            {
+              value: "",
+              label: "确认取消",
+            },
+          ],
         });
-      });
-      this.setState({
-        options: optionCon,
-      });
-      console.log(optionCon);
+        this.setState({
+          options: optionCon,
+        });
+        console.log(optionCon);
+      } else {
+        this.props.history.push("/");
+      }
     });
   }
 
@@ -98,7 +113,7 @@ class Register_page extends Component {
   };
 
   render() {
-    return (
+    return this.props.groups.success && this.props.groups.errorCode === 200 ? (
       <div>
         <div id="register-head">报名表</div>
         <div id="register-position-campus">
@@ -175,6 +190,7 @@ class Register_page extends Component {
                   options={this.state.options}
                   onChange={this.onChange_choose_1}
                   placeholder="志愿一"
+                  allowClear={false}
                 />
               </div>
 
@@ -184,6 +200,7 @@ class Register_page extends Component {
                   className="register-chooose-cascaders-con-cascader"
                   options={this.state.options}
                   onChange={this.onChange_choose_2}
+                  allowClear={false}
                   placeholder="志愿二"
                 />
               </div>
@@ -209,6 +226,25 @@ class Register_page extends Component {
           </div>
         </div>
       </div>
+    ) : (
+      <div className="unGet-register-body">
+        <div id="register-head">报名表</div>
+        <div className="unGet-register-spin-outer">
+          <div className="register-spin">
+            <Spin indicator={antIcon} />
+          </div>
+        </div>
+        <div id="register-submit">
+          <Button
+            id="register-back-con"
+            onClick={() => {
+              this.props.history.goBack();
+            }}
+          >
+            返回
+          </Button>
+        </div>
+      </div>
     );
   }
 }
@@ -222,7 +258,37 @@ const mapStateToProps = (state, ownProps) => {
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    sunmit: async (data, props) => {
+    sunmit: async (dataBeforeComfirm, props) => {
+      console.log(dataBeforeComfirm);
+      let data = {
+        depart1: "",
+        depart2: "",
+        group1: "",
+        group2: "",
+      };
+      if (
+        dataBeforeComfirm.depart1 !== "" &&
+        dataBeforeComfirm.depart2 !== ""
+      ) {
+        console.log("全部通过");
+        data = dataBeforeComfirm;
+      } else if (
+        dataBeforeComfirm.depart1 !== "" &&
+        dataBeforeComfirm.depart2 === ""
+      ) {
+        console.log("仅仅第一个通过");
+        data = dataBeforeComfirm;
+      } else if (
+        dataBeforeComfirm.depart1 === "" &&
+        dataBeforeComfirm.depart2 !== ""
+      ) {
+        console.log("仅仅第二个通过");
+        data=dataBeforeComfirm
+        /*data.depart1 = dataBeforeComfirm.depart2;
+        data.depart2 = dataBeforeComfirm.depart1;
+        data.group1 = dataBeforeComfirm.group2;
+        data.group2 = dataBeforeComfirm.group1;*/
+      }
       console.log(data);
       let result = await changeRegister(data);
       if (result === REGISTER_SUCCESS) {

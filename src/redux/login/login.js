@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from "../request";
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGIN_RESET } from "../request";
 import userStatus from "../../constants/login";
 const defaultState = JSON.parse(localStorage.getItem("loginState")) || {
   isLogin: userStatus.NOT_LOGGED_IN,
@@ -49,7 +49,20 @@ export default function Login(state = defaultState, action) {
         errorCode: action.payload.errorCode,
         errorMsg: action.payload.errorMsg,
       };
-
+    case LOGIN_RESET:
+      localStorage.removeItem("loginState")
+      return{
+        isLogin: userStatus.NOT_LOGGED_IN,
+        data: {
+          id: 0,
+          token: "",
+          username: "",
+          role: "",
+        },
+        success: false,
+        errorCode: 200,
+        errorMsg: "",
+      }
     default:
       return state;
   }

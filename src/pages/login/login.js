@@ -4,6 +4,9 @@ import { login } from "../../redux/request";
 import { Button, Input, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "./login.css";
+import loginbg from '../../constants/img/loginbg.jpg';
+import userStatus from "../../constants/login";
+
 class Login_page extends Component {
   constructor(props) {
     super(props);
@@ -51,16 +54,16 @@ class Login_page extends Component {
       case 2:
         this.props.history.push("/");
         break;
-      case 3:
-        message.error("登陆失败");
-        break;
       default:
         break;
     }
   };
   loginCheck = async () => {
-    await this.props.loginRequest(this.state.username, this.state.password);
-    await this.loginCh();
+    if(this.props.login.isLogin!==userStatus.LOGGING_IN){
+      await this.props.loginRequest(this.state.username, this.state.password);
+     this.loginCh();
+    }
+    
   };
   render() {
     return (
@@ -91,8 +94,9 @@ class Login_page extends Component {
               ghost={this.state.buttonFalse}
               onClick={this.loginCheck}
             >
-              {this.state.buttonFalse ? (
-                <div style={{ color: "red" }}>输入有误</div>
+              {this.props.login.isLogin===userStatus.LOGGING_IN ? (
+                                "登 录 中"
+
               ) : (
                 "登 录"
               )}

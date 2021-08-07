@@ -3,7 +3,11 @@ import { connect } from "react-redux";
 import { Button } from "antd";
 import "./information.css";
 import { UserOutlined } from "@ant-design/icons";
-import { information, runAway, statusGetInfoUnAva } from "../../../redux/request";
+import {
+  information,
+  runAway,
+  statusGetInfoUnAva,
+} from "../../../redux/request";
 const chosenTag = (num, depart, group, positionNum) => {
   return (
     <div className="chosenTagBar">
@@ -39,6 +43,8 @@ const chosenTagNum = (data) => {
     );
   } else if (data.depart1 !== "" && data.depart2 === "") {
     return <div>{chosenTag(1, data.depart1, data.group1, data.number1)}</div>;
+  }else if(data.depart1 === "" && data.depart2 !== ""){
+    return <div>{chosenTag(1, data.depart2, data.group2, data.number2)}</div>;
   }
   return <div></div>;
 };
@@ -50,30 +56,28 @@ class Information_page extends Component {
   }
 
   componentDidMount() {
-     
-  if (this.props.login.isLogin === 2){
-    this.props.TimerRequest();
-     console.log("请求一遍");
-}
+    if (this.props.login.isLogin === 2) {
+      this.props.TimerRequest();
+      console.log("请求一遍");
+    }
   }
 
-  cutTimer=(ctime)=>{
-        clearInterval(ctime);
-        console.log("qqqqqqqqq")
-        this.props.cutTimer();
-  }
+  cutTimer = (ctime) => {
+    clearInterval(ctime);
+    console.log("qqqqqqqqq");
+    this.props.cutTimer();
+  };
 
   gotoLogin = () => {
     this.props.history.push("/login");
   };
 
   gotoRegister = () => {
-    //this.cutTimer(this.props.ctime)
+    this.cutTimer(this.props.ctime);
     this.props.history.push("/register");
-   
   };
   gotoChangeRegister = () => {
-    this.cutTimer(this.props.ctime)
+    this.cutTimer(this.props.ctime);
     this.props.history.push("/change");
   };
   render() {
@@ -127,8 +131,8 @@ class Information_page extends Component {
                   <div className="informationButtonUpletter">
                     注意：您可在X⽉X⽇X时前修改您的报名意向
                   </div>
-                  {this.props.information.data.depart1 !== "" &&
-                  this.props.login.isLogin === 2 ? (
+                  {((this.props.information.data.depart1 !== ""||this.props.information.data.depart2) &&
+                  this.props.login.isLogin === 2) ? (
                     <Button
                       id="informationButtonRegister"
                       onClick={this.gotoChangeRegister}
@@ -145,7 +149,16 @@ class Information_page extends Component {
                   )}
                 </div>
                 <div className="informationButton">
-                  <Button id="informationButtonExit" onClick={()=>runAway()}>退出账号</Button>
+                  <Button
+                    id="informationButtonExit"
+                    onClick={() => {
+                      this.props.nowRunAway().then(()=>{
+                        this.cutTimer(this.props.ctime);
+                      });
+                    }}
+                  >
+                    退出账号
+                  </Button>
                 </div>
               </div>
             ) : (
@@ -169,7 +182,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     login: state.Login,
     information: state.Information,
-    status:state.Status
+    status: state.Status,
   };
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -178,13 +191,21 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       console.log(ownProps);
     },
     TimerRequest: () => {
-        dispatch(information());
+      dispatch(information());
     },
-    cutTimer:()=>{
+    cutTimer: () => {
       dispatch(statusGetInfoUnAva());
-      return new Promise((res,rej)=>{
-        res("changeStatus")
-      })
+      return new Promise((res, rej) => {
+        res("changeStatus");
+      });
+    },
+    nowRunAway: () => {
+      dispatch(runAway());
+      dispatch(statusGetInfoUnAva());
+      
+      return new Promise((res, rej) => {
+        res("changeStatus");
+      });
     },
   };
 };

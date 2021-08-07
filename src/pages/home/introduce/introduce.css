@@ -29,9 +29,14 @@
   margin: 0 auto;
 }
 .intr-campus-group-background{
-  position:absolute;
+  
   width: 150px;
   height: 80px;
+  filter: blur(2px);
+  border: 1px solid rgba(211, 211, 211, 0.23);
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px rgba(211, 211, 211, 0.274);
+  opacity: 0.15;
 }
 #intr-campus-group-software {
   width: 50%;
@@ -42,4 +47,14 @@
 }
 #intr-campus-takePosition {
   height: 100px;
+}
+.intr-campus-group-conText{
+  position:absolute;  
+  justify-content: center;
+  width: 150px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+font-weight: 700;
+color: rgb(98, 97, 97);
 }
