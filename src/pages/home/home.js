@@ -14,9 +14,12 @@ let ctime;
 
 const timed = (props)=>{
   ctime=setInterval(() => {
-  console.log("请求一遍");
-  if (props.login.isLogin === 2)
-  props.TimerRequest();
+ 
+  if (props.login.isLogin === 2){
+      props.TimerRequest();
+       console.log("请求一遍");
+  }
+
   if(!props.status.get_info_isAvail){
     clearInterval(ctime)
   }
@@ -38,6 +41,7 @@ class Home_page extends Component {
 
   cutTimer=()=>{
     this.props.cutTimer().then(()=>{
+      console.log("qwqwqwq")
       if(!this.props.status.get_info_isAvail){
         clearInterval(ctime)
       }
@@ -65,7 +69,7 @@ class Home_page extends Component {
         {this.state.chosen === 0 ? (
           <Introduce history={this.props.history}  />
         ) : (
-          <Information history={this.props.history} cutTime={ctime}/>
+          <Information history={this.props.history} ctime={ctime}/>
         )}
         <div id="footer">
           <Button onClick={this.changeHomeWindow_Intr} id="footerButtonIntr">

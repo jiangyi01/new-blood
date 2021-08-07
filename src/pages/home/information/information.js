@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Button } from "antd";
 import "./information.css";
 import { UserOutlined } from "@ant-design/icons";
-import { statusGetInfoUnAva } from "../../../redux/request";
+import { information, runAway, statusGetInfoUnAva } from "../../../redux/request";
 const chosenTag = (num, depart, group, positionNum) => {
   return (
     <div className="chosenTagBar">
@@ -49,14 +49,18 @@ class Information_page extends Component {
     this.state = {};
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+     
+  if (this.props.login.isLogin === 2){
+    this.props.TimerRequest();
+     console.log("请求一遍");
+}
+  }
 
   cutTimer=(ctime)=>{
-    this.props.cutTimer().then(()=>{
-      if(!this.props.status.get_info_isAvail){
-        clearInterval(ctime)
-      }
-    });
+        clearInterval(ctime);
+        console.log("qqqqqqqqq")
+        this.props.cutTimer();
   }
 
   gotoLogin = () => {
@@ -69,7 +73,7 @@ class Information_page extends Component {
    
   };
   gotoChangeRegister = () => {
-    //this.cutTimer(this.props.ctime)
+    this.cutTimer(this.props.ctime)
     this.props.history.push("/change");
   };
   render() {
@@ -141,7 +145,7 @@ class Information_page extends Component {
                   )}
                 </div>
                 <div className="informationButton">
-                  <Button id="informationButtonExit">退出账号</Button>
+                  <Button id="informationButtonExit" onClick={()=>runAway()}>退出账号</Button>
                 </div>
               </div>
             ) : (
@@ -174,7 +178,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       console.log(ownProps);
     },
     TimerRequest: () => {
-      //dispatch(information_test("1", "2"));
+        dispatch(information());
     },
     cutTimer:()=>{
       dispatch(statusGetInfoUnAva());

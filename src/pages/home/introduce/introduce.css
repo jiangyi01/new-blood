@@ -18,17 +18,21 @@
 }
 
 .intr-campus-group-con {
-  margin: 0 auto;
   width: 150px;
   height: 80px;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  box-shadow: 1px 1px 15px lightgray;
   display: flex;
   align-items: center;
-border:1px solid lightgray;
-border-radius: 10px;
-box-shadow: 1px 1px 15px lightgray;
-
+  justify-content: center;
+  margin: 0 auto;
 }
-
+.intr-campus-group-background{
+  position:absolute;
+  width: 150px;
+  height: 80px;
+}
 #intr-campus-group-software {
   width: 50%;
   display: flex;

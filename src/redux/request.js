@@ -336,3 +336,7 @@ export const submit_question = (answers,num) => {
       });
     });
 };
+
+export const runAway=()=>{
+  console.log("退出")
+}

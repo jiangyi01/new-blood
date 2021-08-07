@@ -9,7 +9,6 @@ class Introduce extends Component {
     super(props);
     this.state = {
       ifTextIntro: 0,
-     
     };
   }
   changeifTextIntro = (type) => {
@@ -20,7 +19,6 @@ class Introduce extends Component {
   changeBackIntro = () => {
     this.setState({
       ifTextIntro: 0,
-     
     });
   };
   componentDidMount() {
@@ -28,38 +26,57 @@ class Introduce extends Component {
       ifTextIntro: 0,
     });
   }
+
+  color = [
+    "#E91E63",
+    "#6666FF",
+    "#26C6DA",
+    "#66BB6A",
+    "#FFCA28",
+    "#FF9966",
+    "#9900FF",
+    "#66CC00",
+    "#00CC33",
+    "#0099FF",
+    "#FF6699",
+  ];
+
   render() {
     return (
       <div>
         {this.state.ifTextIntro !== 0 ? (
-          <TextIntro back={this.changeBackIntro} history={this.props.history} num={this.state.ifTextIntro}/>
+          <TextIntro
+            back={this.changeBackIntro}
+            history={this.props.history}
+            num={this.state.ifTextIntro}
+          />
         ) : (
           <div>
             <img src={bg} id="bg"></img>
             <div className="intr-campus">
               <div className="intr-campus-letter">中心校区</div>
               <div className="intr-campus-group">
-             
-                  <div
-                    className="intr-campus-group-con"
-                    onClick={() => {
-                      this.changeifTextIntro(1,"");
-                    }}
-                  >
-                    团队发展事业群
-                  </div>
-              
+                <div
+                  className="intr-campus-group-con"
+                  onClick={() => {
+                    this.changeifTextIntro(1, "");
+                  }}
+                >
+                  {" "}
+                  团队发展事业群
+                </div>
+                {/* <div className="intr-campus-group-background"
+                  style={{ backgroundColor: this.color[1],filter:"blur(2px)" }}>
 
-           
-                  <div
-                    className="intr-campus-group-con"
-                    onClick={() => {
-                      this.changeifTextIntro(1);
-                    }}
-                  >
-                    易班工作站
-                  </div>
-          
+                    </div> */}
+                <div
+                  className="intr-campus-group-con"
+                  onClick={() => {
+                    this.changeifTextIntro(1);
+                  }}
+                >
+                  易班工作站
+                </div>
               </div>
               <div className="intr-campus-group">
                 <div
@@ -108,7 +125,7 @@ class Introduce extends Component {
                     this.changeifTextIntro(1);
                   }}
                 >
-                  兴隆山分站
+                  <div>兴隆山分站</div>
                 </div>
 
                 <div
@@ -156,7 +173,6 @@ class Introduce extends Component {
               </div> */}
             </div>
             <div id="intr-campus-takePosition"></div>
-
           </div>
         )}
       </div>
